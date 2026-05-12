@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Savate klub Kraljevec</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -51,6 +52,13 @@
     }
     a { color: inherit; text-decoration: none; }
 
+    /* Focus (tipkovnica) */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
     /* NAV */
     nav {
       position: fixed;
@@ -67,10 +75,10 @@
       border-bottom: 1px solid var(--border);
       transition: background .3s, border-color .3s;
     }
-    [data-theme="dark"] nav {
-      background: rgba(0,0,0,0.82);
-    }
+    [data-theme="dark"] nav { background: rgba(0,0,0,0.82); }
+
     .nav-brand { font-size: 0.88rem; font-weight: 700; letter-spacing: -0.01em; }
+
     .nav-links {
       display: flex; gap: 28px; list-style: none;
       position: absolute; left: 50%; transform: translateX(-50%);
@@ -80,6 +88,7 @@
       transition: color 0.15s;
     }
     .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
     .hamburger {
       display: none; flex-direction: column; gap: 4px;
       cursor: pointer; padding: 6px;
@@ -108,13 +117,12 @@
     [data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 
     /* smooth theme transition */
-    body, nav, footer, .stat-cell, .ac, .cc, .widget-wrap,
-    .season-selector, .season-btn, .social-pill, .widget-credit {
+    body, nav, footer, .ac, .cc, .social-pill {
       transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
     }
 
-    /* HERO */
-    #hero {
+    /* HOME */
+    #home {
       min-height: 100svh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -122,8 +130,9 @@
       padding: calc(var(--nav-h) + 60px) 24px 80px;
       background: var(--bg3);
       position: relative; overflow: hidden;
+      z-index: 1; /* home ispod logo layera */
     }
-    #hero::before {
+    #home::before {
       content: '';
       position: absolute;
       width: 800px; height: 800px; border-radius: 50%;
@@ -132,50 +141,33 @@
       transform: translate(-50%, -58%);
       pointer-events: none;
     }
-    [data-theme="dark"] #hero::before {
+    [data-theme="dark"] #home::before {
       background: radial-gradient(circle, rgba(41,151,255,0.10) 0%, transparent 70%);
     }
-    .hero-eyebrow {
+
+    .home-eyebrow {
       font-size: 0.72rem; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--accent); margin-bottom: 20px;
       opacity: 0; animation: rise .7s .1s cubic-bezier(.22,1,.36,1) forwards;
     }
-    .hero-title {
+    .home-title {
       font-size: clamp(3rem, 8vw, 7rem);
       font-weight: 800; letter-spacing: -0.04em; line-height: 1.02;
       opacity: 0; animation: rise .8s .22s cubic-bezier(.22,1,.36,1) forwards;
     }
-    .hero-title em { font-style: normal; color: var(--accent); }
-    .hero-sub {
+    .home-title em { font-style: normal; color: var(--accent); }
+    .home-sub {
       margin-top: 20px; font-size: 1.05rem; color: var(--text3);
       max-width: 460px;
       opacity: 0; animation: rise .8s .38s cubic-bezier(.22,1,.36,1) forwards;
     }
-    .hero-actions {
-      margin-top: 40px; display: flex; gap: 12px;
-      justify-content: center; flex-wrap: wrap;
-      opacity: 0; animation: rise .8s .52s cubic-bezier(.22,1,.36,1) forwards;
-    }
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: var(--font); font-size: 0.82rem; font-weight: 600;
-      padding: 11px 22px; border-radius: 980px;
-      cursor: pointer; border: none;
-      transition: all .2s cubic-bezier(.22,1,.36,1);
-    }
-    .pill-blue { background: var(--accent); color: #fff; }
-    .pill-blue:hover {
-      background: #006edb; transform: scale(1.03);
-      box-shadow: 0 4px 18px rgba(0,113,227,.3);
-    }
-    .pill-clear { background: rgba(0,0,0,.06); color: var(--text); }
-    .pill-clear:hover { background: rgba(0,0,0,.1); transform: scale(1.03); }
 
     .scroll-hint {
       position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 6px;
       opacity: 0; animation: rise 1s 1s forwards, bob 2.5s 1.8s infinite;
+      z-index: 5;
     }
     .scroll-hint-line {
       width: 1px; height: 36px;
@@ -184,6 +176,49 @@
     .scroll-hint-label {
       font-size: 0.62rem; font-weight: 600;
       letter-spacing: .14em; text-transform: uppercase; color: var(--text3);
+    }
+
+    /* LOGO layer (između home i ostalih sekcija) */
+    .home-logo {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      z-index: 2;           /* iznad home, ispod sekcija */
+      pointer-events: none; /* da se ne može kliknuti */
+      opacity: 1;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .home-logo img {
+      width: min(520px, 82vw);
+      height: auto;
+      opacity: 0.22;
+      filter: none;
+      transform: translateY(-14px);
+      transition: opacity .35s ease, filter .35s ease;
+    }
+    /* DARK: invert => crno postaje bijelo */
+    [data-theme="dark"] .home-logo img {
+      opacity: 0.28;
+      filter: invert(1) contrast(1.05) brightness(1.05);
+    }
+    /* Opcija A: kad home više nije vidljiv, sakrij logo */
+    .home-logo.is-hidden {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    /* Home sadržaj iznad logoa (naslov, tekst) */
+    .home-inner {
+      position: relative;
+      z-index: 4;
+    }
+
+    /* Sve ostale sekcije + footer PREKRIVAJU logo */
+    section:not(#home),
+    footer {
+      position: relative;
+      z-index: 3; /* ovo je iznad logoa => "prelazi preko" */
     }
 
     /* SHARED SECTION */
@@ -223,7 +258,6 @@
       font-size: 1.9rem; font-weight: 800;
       letter-spacing: -0.04em; line-height: 1; margin-bottom: 5px;
     }
-    .ac-n em { font-style: normal; color: var(--accent); }
     .ac-l {
       font-size: 0.72rem; font-weight: 500;
       color: var(--text3); text-transform: uppercase; letter-spacing: .06em;
@@ -327,198 +361,239 @@
         padding: 24px; gap: 18px;
         transition: background .3s;
       }
-      [data-theme="dark"] .nav-links.open {
-        background: rgba(0,0,0,.96);
-      }
+      [data-theme="dark"] .nav-links.open { background: rgba(0,0,0,.96); }
       .nav-links.open a { font-size: 1rem; }
       .hamburger { display: flex; }
-      .stat-strip { grid-template-columns: repeat(2,1fr); }
-      .stat-cell { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat-cell:nth-child(odd) { border-right: 1px solid var(--border); }
-      .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
       .about-layout { grid-template-columns: 1fr; gap: 40px; }
       .contact-cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-brand">Savate klub Kraljevec</div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#o-klubu">O klubu</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-  </ul>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <!-- Sun icon (shown in light mode) -->
-      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z"/>
-      </svg>
-      <!-- Moon icon (shown in dark mode) -->
-      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"/>
-      </svg>
-    </button>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-</nav>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">Savate klub Kraljevec</div>
 
-<!-- HERO -->
-<section id="hero">
-  <p class="hero-eyebrow"></p>
-  <h1 class="hero-title">Savate klub<br>Kraljevec</h1>
-  <p class="hero-sub"></p>
-  <div class="scroll-hint">
-    <div class="scroll-hint-label">Scroll</div>
-    <div class="scroll-hint-line"></div>
-  </div>
-</section>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#o-klubu">O klubu</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
 
-<!-- O KLUBU -->
-<section id="o-klubu">
-  <div class="container">
-    <p class="s-eyebrow reveal">O klubu</p>
-    <h2 class="s-title reveal reveal-d1">Tko smo mi</h2>
-    <div class="about-layout">
-      <div class="s-body reveal reveal-d2">
-        <p>Klub u Sesvetskom Kraljevcu djeluje od jeseni 1976. kada je osnovan Karate klub ''Budućnost''. Prvi treninzi održavani su u dvorani kina ''Jedinstvo''. Otvaranjem sportske dvorane u OŠ ''Slavko Stančir'' bitno su poboljšani uvjeti za rad karatista, a u rad se, pored Zdenka Čora, uključuje još jedan trener - Željko Jarec.</p>
-        <p>Od 1978. godine vježba se tzv. ''full - contact'' karate. Na Europskom prvenstvu u Londonu 1980. postignuti su prvi zapaženi uspjesi: brončana medalja i peto mjesto. Slijede brojni pozivi na međunarodna natjecanja u Hamburg, Genovu i dr.. Naravno, klub postiže i značajne rezultate na domaćoj sceni gdje redovito ima najmanje jednog prvaka države.</p>
-        <p>Godine 1982. u klubu se počinje vježbati Savate - francuski boks.  U Zagrebu 1983. održan je prvi Kup Zagreba na kojem su gosti bili borci iz Francuske.</p>
-        <p>Klub mijenja ime u Savate klub ''Horus'' i nastupa diljem Europe (Francuska, Belgija, Italija, Mađarska, Češka).</p>
-        <p>Od tada članovi kluba svake godine osvajaju državna i internacionalna prvenstva, te postižu vrsne rezultate na europskoj i svjetskoj sceni (2. mjesto na Europskom prvenstvu 1986., te treće rangirano mjesto na svjetskoj ljestvici 1991.godine).</p>
-        <p>Dva velika natjecanja organizirana su u Zagrebu 1990. (Jugoslavija - Francuska) i  1991. (''Noć šampiona'') na kojem nastupaju tada najveća imena u borilačkom sportu (Branko Cikatić, Marc Holland, Drago Bunčić i dr.), a borci  iz Sesvetskog Kraljevca i ovdje pobjedama dokazuju svoju kvalitetu.</p>
-        <p>Uspjesi su se nizali sve do početka Domovinskog rata 1991., kada se trener i nekolicina članova uključuju u obranu Domovine, a rad kluba se prekida. Tijekom boravka u postrojbama Hrvatske vojske tri člana kluba su ranjena, a jedan je smrtno stradao.</p>
-        <p>Klub  nastavlja svoju aktivnost ponovno nakon rata 1996., a danas pod novim imenom, Savate klub ''Kraljevec'' (rješenje Gradskog ureda za opću upravu (KLASA: UP/I-230-02/2004-01/545; URBROJ: 251-02-02/2-04-02) od 28. listopada 2004.), okuplja blizu 50 članova, djece i mladeži iz Sesv. Kraljevca i okolnih mjesta. Treninzi se održavaju u prostoru OŠ ''Sesvetski Kraljevec'' i DVD ''Sesvetski Kraljevec''.</p>
-        <p>Aktivno sudjelujemo na natjecanjima pa su tako članovi kluba na Kadetskom prvenstvu države za 2004. godinu osvojili osam medalja, od kojih 5 zlatnih i 3 srebrne, a klub je proglašen najuspješnijim u državi što je reportažno prikazano i na HTV-u.</p>
-        <p>U 2005., klub je s natjecateljima nastupio na juniorskom prvenstvu Hrvatske na kojem su osvojena jedna zlatna i dvije srebrne medalje dok su na kadetskom prvenstvu osvojene tri zlatne i jedna srebrna medalja. </p>
-      </div>
-      <div class="about-cards reveal reveal-d3">
-        <div class="ac"><div class="ac-n">1976</div><div class="ac-l">Osnivanje</div></div>
-        <div class="ac"><div class="ac-n">Zagrebački savate savez</div><div class="ac-l">Savez</div></div>
-        <div class="ac"><div class="ac-n">DVD Sesvetski Kraljevec</div><div class="ac-l">Dvorana</div></div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <!-- Sun icon (shown in light mode) -->
+        <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z"/>
+        </svg>
+
+        <!-- Moon icon (shown in dark mode) -->
+        <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"/>
+        </svg>
+      </button>
+
+      <div class="hamburger" id="hamburger" role="button" aria-label="Open menu" aria-expanded="false" tabindex="0" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
       </div>
     </div>
-  </div>
-</section>
+  </nav>
 
-<!-- KONTAKT -->
-<section id="kontakt">
-  <div class="container">
-    <p class="s-eyebrow reveal">Kontakt</p>
-    <h2 class="s-title reveal reveal-d1">Povežite se s nama</h2>
-    <div class="contact-cards">
-      <div class="cc reveal reveal-d1">
-        <div class="cc-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 21.72 16z"/></svg>
+  <!-- HOME -->
+  <section id="home">
+    <div class="home-logo" aria-hidden="true">
+      <img src="logo1.png" alt="" />
+    </div>
+
+    <div class="home-inner">
+      <p class="home-eyebrow"></p>
+      <h1 class="home-title">Savate klub<br><em>Kraljevec</em></h1>
+      <p class="home-sub"></p>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-hint-label">Scroll</div>
+      <div class="scroll-hint-line"></div>
+    </div>
+  </section>
+
+  <!-- O KLUBU -->
+  <section id="o-klubu">
+    <div class="container">
+      <p class="s-eyebrow reveal">O klubu</p>
+      <h2 class="s-title reveal reveal-d1">Tko smo mi</h2>
+
+      <div class="about-layout">
+        <div class="s-body reveal reveal-d2">
+          <p>Klub u Sesvetskom Kraljevcu djeluje od jeseni 1976. kada je osnovan Karate klub ''Budućnost''. Prvi treninzi održavani su u dvorani kina ''Jedinstvo''. Otvaranjem sportske dvorane u OŠ ''Slavko Stančir'' bitno su poboljšani uvjeti za rad karatista, a u rad se, pored Zdenka Čora, uključuje još jedan trener - Željko Jarec.</p>
+          <p>Od 1978. godine vježba se tzv. ''full - contact'' karate. Na Europskom prvenstvu u Londonu 1980. postignuti su prvi zapaženi uspjesi: brončana medalja i peto mjesto. Slijede brojni pozivi na međunarodna natjecanja u Hamburg, Genovu i dr.. Naravno, klub postiže i značajne rezultate na domaćoj sceni gdje redovito ima najmanje jednog prvaka države.</p>
+          <p>Godine 1982. u klubu se počinje vježbati Savate - francuski boks. U Zagrebu 1983. održan je prvi Kup Zagreba na kojem su gosti bili borci iz Francuske.</p>
+          <p>Klub mijenja ime u Savate klub ''Horus'' i nastupa diljem Europe (Francuska, Belgija, Italija, Mađarska, Češka).</p>
+          <p>Od tada članovi kluba svake godine osvajaju državna i internacionalna prvenstva, te postižu vrsne rezultate na europskoj i svjetskoj sceni (2. mjesto na Europskom prvenstvu 1986., te treće rangirano mjesto na svjetskoj ljestvici 1991.godine).</p>
+          <p>Dva velika natjecanja organizirana su u Zagrebu 1990. (Jugoslavija - Francuska) i 1991. (''Noć šampiona'') na kojem nastupaju tada najveća imena u borilačkom sportu (Branko Cikatić, Marc Holland, Drago Bunčić i dr.), a borci iz Sesvetskog Kraljevca i ovdje pobjedama dokazuju svoju kvalitetu.</p>
+          <p>Uspjesi su se nizali sve do početka Domovinskog rata 1991., kada se trener i nekolicina članova uključuju u obranu Domovine, a rad kluba se prekida. Tijekom boravka u postrojbama Hrvatske vojske tri člana kluba su ranjena, a jedan je smrtno stradao.</p>
+          <p>Klub nastavlja svoju aktivnost ponovno nakon rata 1996., a danas pod novim imenom, Savate klub ''Kraljevec'' (rješenje Gradskog ureda za opću upravu (KLASA: UP/I-230-02/2004-01/545; URBROJ: 251-02-02/2-04-02) od 28. listopada 2004.), okuplja blizu 50 članova, djece i mladeži iz Sesv. Kraljevca i okolnih mjesta. Treninzi se održavaju u prostoru OŠ ''Sesvetski Kraljevec'' i DVD ''Sesvetski Kraljevec''.</p>
+          <p>Aktivno sudjelujemo na natjecanjima pa su tako članovi kluba na Kadetskom prvenstvu države za 2004. godinu osvojili osam medalja, od kojih 5 zlatnih i 3 srebrne, a klub je proglašen najuspješnijim u državi što je reportažno prikazano i na HTV-u.</p>
+          <p>U 2005., klub je s natjecateljima nastupio na juniorskom prvenstvu Hrvatske na kojem su osvojena jedna zlatna i dvije srebrne medalje dok su na kadetskom prvenstvu osvojene tri zlatne i jedna srebrna medalja.</p>
         </div>
-        <div>
-          <div class="cc-label">Trener Josip</div>
-          <div class="cc-value"><a href="tel:098555333">098 555 333</a></div>
-        </div>
-      </div>
-      <div class="cc reveal reveal-d2">
-        <div class="cc-icon">
-          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div>
-          <div class="cc-label">E-mail</div>
-          <div class="cc-value"><a href="mailto:skkraljevec@gmail.com">skkraljevec@gmail.com</a></div>
-        </div>
-      </div>
-      <div class="cc reveal reveal-d1">
-        <div class="cc-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div>
-          <div class="cc-label">Dvorana</div>
-          <div class="cc-value">DVD Sesvetski Kraljevec<br>Željeznička ulica 13, 10361, Sesvetski Kraljevec</div>
-        </div>
-      </div>
-      <div class="cc reveal reveal-d2">
-        <div class="cc-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div>
-          <div class="cc-label">Raspored treninga</div>
-          <div class="cc-value">Ponedjeljak, utorak i srijeda 20h-22h</div>
+
+        <div class="about-cards reveal reveal-d3">
+          <div class="ac"><div class="ac-n">1976</div><div class="ac-l">Osnivanje</div></div>
+          <div class="ac"><div class="ac-n">Zagrebački savate savez</div><div class="ac-l">Savez</div></div>
+          <div class="ac"><div class="ac-n">DVD Sesvetski Kraljevec</div><div class="ac-l">Dvorana</div></div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="social-row reveal reveal-d3">
-      <a href="https://www.instagram.com/savateklub_kraljevec/" target="_blank" rel="noopener" class="social-pill">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-        @savateklub_kraljevec
-      </a>
-      <a href="https://www.facebook.com/savate.kraljevec/" target="_blank" rel="noopener" class="social-pill">
-        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        Facebook
-      </a>
+  <!-- KONTAKT -->
+  <section id="kontakt">
+    <div class="container">
+      <p class="s-eyebrow reveal">Kontakt</p>
+      <h2 class="s-title reveal reveal-d1">Povežite se s nama</h2>
+
+      <div class="contact-cards">
+        <div class="cc reveal reveal-d1">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 21.72 16z"/></svg>
+          </div>
+          <div>
+            <div class="cc-label">Trener Josip</div>
+            <div class="cc-value"><a href="tel:098555333">098 555 333</a></div>
+          </div>
+        </div>
+
+        <div class="cc reveal reveal-d2">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="cc-label">E-mail</div>
+            <div class="cc-value"><a href="mailto:skkraljevec@gmail.com">skkraljevec@gmail.com</a></div>
+          </div>
+        </div>
+
+        <div class="cc reveal reveal-d1">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="cc-label">Dvorana</div>
+            <div class="cc-value">DVD Sesvetski Kraljevec<br>Željeznička ulica 13, 10361, Sesvetski Kraljevec</div>
+          </div>
+        </div>
+
+        <div class="cc reveal reveal-d2">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="cc-label">Raspored treninga</div>
+            <div class="cc-value">Ponedjeljak, utorak i srijeda 20h-22h</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-row reveal reveal-d3">
+        <a href="https://www.instagram.com/savateklub_kraljevec/" target="_blank" rel="noopener" class="social-pill">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          @savateklub_kraljevec
+        </a>
+
+        <a href="https://www.facebook.com/savate.kraljevec/" target="_blank" rel="noopener" class="social-pill">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">Savate klub Kraljevec</div>
-    <div class="footer-links">
-      <a href="#o-klubu">O klubu</a>
-      <a href="#kontakt">Kontakt</a>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Savate klub Kraljevec</div>
+      <div class="footer-links">
+        <a href="#o-klubu">O klubu</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div class="footer-copy">© 2026 Savate klub Kraljevec</div>
     </div>
-    <div class="footer-copy">© 2026 Savate klub Kraljevec</div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-  // Theme — load saved preference or system preference
-  const savedTheme = localStorage.getItem('kksk-theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
+  <script>
+    // Theme — load saved preference or system preference
+    const savedTheme = localStorage.getItem('kksk-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
 
-  function toggleTheme() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const next = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('kksk-theme', next);
-  }
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('kksk-theme', next);
+    }
 
-  // Mobile menu
-  function toggleMenu() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-  document.querySelectorAll('.nav-links a').forEach(a =>
-    a.addEventListener('click', () =>
-      document.getElementById('navLinks').classList.remove('open')));
+    // Mobile menu + aria-expanded
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const hb = document.getElementById('hamburger');
+      navLinks.classList.toggle('open');
+      const isOpen = navLinks.classList.contains('open');
+      hb.setAttribute('aria-expanded', String(isOpen));
+    }
 
-  // Active nav highlight
-  const sections = document.querySelectorAll('section[id]');
-  const links    = document.querySelectorAll('.nav-links a');
-  sections.forEach(s =>
+    // Close menu on link click
+    document.querySelectorAll('.nav-links a').forEach(a =>
+      a.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+        document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
+      })
+    );
+
+    // Allow Enter/Space on hamburger
+    document.getElementById('hamburger').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    sections.forEach(s =>
+      new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            links.forEach(a => a.classList.remove('active'));
+            const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+            if (a) a.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' }).observe(s)
+    );
+
+    // Scroll reveal
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+    // Opcija A: sakrij logo kad home nije vidljiv
+    const home = document.getElementById('home');
+    const logoLayer = document.querySelector('.home-logo');
+
     new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          links.forEach(a => a.classList.remove('active'));
-          const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-          if (a) a.classList.add('active');
-        }
+        logoLayer.classList.toggle('is-hidden', !e.isIntersecting);
       });
-    }, { rootMargin: '-40% 0px -55% 0px' }).observe(s));
-
-  // Scroll reveal
-  const ro = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
-</script>
+    }, { threshold: 0.15 }).observe(home);
+  </script>
 </body>
 </html>
