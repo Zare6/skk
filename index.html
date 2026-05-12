@@ -229,55 +229,6 @@
       color: var(--text3); text-transform: uppercase; letter-spacing: .06em;
     }
 
-    /* LJESTVICA */
-    #ljestvica { background: var(--bg); }
-
-    .season-selector {
-      display: inline-flex;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 980px;
-      padding: 4px; gap: 4px;
-      margin-bottom: 36px;
-      box-shadow: var(--shadow-sm);
-    }
-    .season-btn {
-      font-family: var(--font);
-      font-size: 0.8rem; font-weight: 600;
-      padding: 8px 20px; border-radius: 980px;
-      border: none; cursor: pointer;
-      background: transparent; color: var(--text3);
-      transition: all .2s cubic-bezier(.22,1,.36,1);
-    }
-    .season-btn.active {
-      background: var(--accent); color: #fff;
-      box-shadow: 0 2px 8px rgba(0,113,227,.25);
-    }
-    .season-btn:not(.active):hover {
-      background: var(--bg3); color: var(--text);
-    }
-
-    .widget-wrap {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-    }
-    .widget-wrap.hidden { display: none; }
-    .widget-wrap iframe { display: block; width: 100%; border: none; }
-    .widget-credit {
-      padding: 12px 20px;
-      border-top: 1px solid var(--border);
-      font-size: 0.72rem; color: var(--text3);
-      background: var(--bg3);
-    }
-    .widget-credit a { color: var(--accent); }
-    .widget-credit a:hover { text-decoration: underline; }
-
-    /* RASPORED */
-    #raspored { background: var(--bg2); }
-
     /* KONTAKT */
     #kontakt { background: var(--bg); }
     .contact-cards {
@@ -396,10 +347,9 @@
 <nav>
   <div class="nav-brand">Savate klub Kraljevec</div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#o-klubu">Home</a></li>
-    <li><a href="#ljestvica">O klubu</a></li>
-    <li><a href="#raspored">Kontakt</a></li>
-    <li><a href="#kontakt">Sponzori</a></li>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#o-klubu">O klubu</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:10px;">
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -421,7 +371,7 @@
 <!-- HERO -->
 <section id="hero">
   <p class="hero-eyebrow"></p>
-  <h1 class="hero-title">Savate klub<br><em>Kraljevec</em></h1>
+  <h1 class="hero-title">Savate klub<br>Kraljevec</h1>
   <p class="hero-sub"></p>
   <div class="scroll-hint">
     <div class="scroll-hint-label">Scroll</div>
@@ -468,7 +418,7 @@
         </div>
         <div>
           <div class="cc-label">Trener Josip</div>
-          <div class="cc-value"><a href="tel:0915614177">098 555 333</a></div>
+          <div class="cc-value"><a href="tel:098555333">098 555 333</a></div>
         </div>
       </div>
       <div class="cc reveal reveal-d2">
@@ -477,7 +427,7 @@
         </div>
         <div>
           <div class="cc-label">E-mail</div>
-          <div class="cc-value"><a href="mailto:kosarkaskc@gmail.com">skkraljevec@gmail.com</a></div>
+          <div class="cc-value"><a href="mailto:skkraljevec@gmail.com">skkraljevec@gmail.com</a></div>
         </div>
       </div>
       <div class="cc reveal reveal-d1">
@@ -501,11 +451,11 @@
     </div>
 
     <div class="social-row reveal reveal-d3">
-      <a href="https://www.instagram.com/kk.sesvetski.kraljevec/" target="_blank" rel="noopener" class="social-pill">
+      <a href="https://www.instagram.com/savateklub_kraljevec//" target="_blank" rel="noopener" class="social-pill">
         <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-        @kk.sesvetski.kraljevec
+        @savateklub_kraljevec
       </a>
-      <a href="https://www.facebook.com/profile.php?id=61564058195795" target="_blank" rel="noopener" class="social-pill">
+      <a href="https://www.facebook.com/savate.kraljevec/" target="_blank" rel="noopener" class="social-pill">
         <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         Facebook
       </a>
@@ -519,7 +469,6 @@
     <div class="footer-brand">Savate klub Kraljevec</div>
     <div class="footer-links">
       <a href="#o-klubu">O klubu</a>
-      <a href="#ljestvica"></a>
       <a href="#kontakt">Kontakt</a>
     </div>
     <div class="footer-copy">© 2026 Savate klub Kraljevec</div>
@@ -548,16 +497,6 @@
   document.querySelectorAll('.nav-links a').forEach(a =>
     a.addEventListener('click', () =>
       document.getElementById('navLinks').classList.remove('open')));
-
-  // Season switcher
-  function switchSeason(key) {
-    document.getElementById('widget-2526').classList.toggle('hidden', key !== '2526');
-    document.getElementById('widget-2425').classList.toggle('hidden', key !== '2425');
-    document.querySelectorAll('.season-btn').forEach((btn, i) => {
-      btn.classList.toggle('active',
-        (i === 0 && key === '2526') || (i === 1 && key === '2425'));
-    });
-  }
 
   // Active nav highlight
   const sections = document.querySelectorAll('section[id]');
