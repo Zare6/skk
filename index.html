@@ -1,1 +1,683 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Savate klub Kraljevec</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
+  <style>
+    :root {
+      --bg:        #f5f5f7;
+      --bg2:       #ffffff;
+      --bg3:       #fbfbfd;
+      --text:      #1d1d1f;
+      --text2:     #424245;
+      --text3:     #6e6e73;
+      --accent:    #0071e3;
+      --border:    rgba(0,0,0,0.08);
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+      --radius:    18px;
+      --nav-h:     52px;
+      --font:      'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* DARK THEME */
+    [data-theme="dark"] {
+      --bg:        #000000;
+      --bg2:       #1c1c1e;
+      --bg3:       #141414;
+      --text:      #f5f5f7;
+      --text2:     #aeaeb2;
+      --text3:     #636366;
+      --accent:    #2997ff;
+      --border:    rgba(255,255,255,0.10);
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.30);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.50);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(245,245,247,0.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s, border-color .3s;
+    }
+    [data-theme="dark"] nav {
+      background: rgba(0,0,0,0.82);
+    }
+    .nav-brand { font-size: 0.88rem; font-weight: 700; letter-spacing: -0.01em; }
+    .nav-links {
+      display: flex; gap: 28px; list-style: none;
+      position: absolute; left: 50%; transform: translateX(-50%);
+    }
+    .nav-links a {
+      font-size: 0.78rem; font-weight: 500; color: var(--text2);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 4px;
+      cursor: pointer; padding: 6px;
+    }
+    .hamburger span {
+      display: block; width: 20px; height: 1.5px;
+      background: var(--text); border-radius: 2px; transition: all .25s;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s cubic-bezier(.22,1,.36,1);
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { background: var(--bg3); transform: scale(1.08); }
+    .theme-toggle svg { width: 17px; height: 17px; fill: var(--text2); }
+    .theme-toggle .icon-sun  { display: block; }
+    .theme-toggle .icon-moon { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-sun  { display: none; }
+    [data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+    /* smooth theme transition */
+    body, nav, footer, .stat-cell, .ac, .cc, .widget-wrap,
+    .season-selector, .season-btn, .social-pill, .widget-credit {
+      transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 60px) 24px 80px;
+      background: var(--bg3);
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,113,227,0.07) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -58%);
+      pointer-events: none;
+    }
+    [data-theme="dark"] #hero::before {
+      background: radial-gradient(circle, rgba(41,151,255,0.10) 0%, transparent 70%);
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 20px;
+      opacity: 0; animation: rise .7s .1s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.02;
+      opacity: 0; animation: rise .8s .22s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-title em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      margin-top: 20px; font-size: 1.05rem; color: var(--text3);
+      max-width: 460px;
+      opacity: 0; animation: rise .8s .38s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-actions {
+      margin-top: 40px; display: flex; gap: 12px;
+      justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: rise .8s .52s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font); font-size: 0.82rem; font-weight: 600;
+      padding: 11px 22px; border-radius: 980px;
+      cursor: pointer; border: none;
+      transition: all .2s cubic-bezier(.22,1,.36,1);
+    }
+    .pill-blue { background: var(--accent); color: #fff; }
+    .pill-blue:hover {
+      background: #006edb; transform: scale(1.03);
+      box-shadow: 0 4px 18px rgba(0,113,227,.3);
+    }
+    .pill-clear { background: rgba(0,0,0,.06); color: var(--text); }
+    .pill-clear:hover { background: rgba(0,0,0,.1); transform: scale(1.03); }
+
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      opacity: 0; animation: rise 1s 1s forwards, bob 2.5s 1.8s infinite;
+    }
+    .scroll-hint-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--text3), transparent);
+    }
+    .scroll-hint-label {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--text3);
+    }
+
+    /* STAT STRIP */
+    .stat-strip {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4,1fr);
+    }
+    .stat-cell {
+      padding: 40px 24px; text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background .2s;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-cell:hover { background: var(--bg); }
+    .stat-n {
+      font-size: 2.4rem; font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1;
+    }
+    .stat-n em { font-style: normal; color: var(--accent); }
+    .stat-l {
+      margin-top: 6px; font-size: 0.76rem; font-weight: 500;
+      color: var(--text3); text-transform: uppercase; letter-spacing: .04em;
+    }
+
+    /* SHARED SECTION */
+    section { padding: 100px 24px; }
+    .container { max-width: 860px; margin: 0 auto; }
+    .s-eyebrow {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .s-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
+      margin-bottom: 40px;
+    }
+    .s-body { font-size: 1rem; color: var(--text3); line-height: 1.78; }
+    .s-body p { margin-bottom: 1em; }
+    .s-body p:last-child { margin-bottom: 0; }
+
+    /* O KLUBU */
+    #o-klubu { background: var(--bg2); }
+    .about-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: start;
+    }
+    .about-cards {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow-md);
+    }
+    .ac {
+      background: var(--bg3); padding: 28px 24px 26px;
+      transition: background .2s;
+    }
+    .ac:hover { background: var(--bg); }
+    .ac-n {
+      font-size: 1.9rem; font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1; margin-bottom: 5px;
+    }
+    .ac-n em { font-style: normal; color: var(--accent); }
+    .ac-l {
+      font-size: 0.72rem; font-weight: 500;
+      color: var(--text3); text-transform: uppercase; letter-spacing: .06em;
+    }
+
+    /* LJESTVICA */
+    #ljestvica { background: var(--bg); }
+
+    .season-selector {
+      display: inline-flex;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 980px;
+      padding: 4px; gap: 4px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+    .season-btn {
+      font-family: var(--font);
+      font-size: 0.8rem; font-weight: 600;
+      padding: 8px 20px; border-radius: 980px;
+      border: none; cursor: pointer;
+      background: transparent; color: var(--text3);
+      transition: all .2s cubic-bezier(.22,1,.36,1);
+    }
+    .season-btn.active {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 2px 8px rgba(0,113,227,.25);
+    }
+    .season-btn:not(.active):hover {
+      background: var(--bg3); color: var(--text);
+    }
+
+    .widget-wrap {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .widget-wrap.hidden { display: none; }
+    .widget-wrap iframe { display: block; width: 100%; border: none; }
+    .widget-credit {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem; color: var(--text3);
+      background: var(--bg3);
+    }
+    .widget-credit a { color: var(--accent); }
+    .widget-credit a:hover { text-decoration: underline; }
+
+    /* RASPORED */
+    #raspored { background: var(--bg2); }
+
+    /* KONTAKT */
+    #kontakt { background: var(--bg); }
+    .contact-cards {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 16px; margin-bottom: 24px;
+    }
+    .cc {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow-sm);
+      display: flex; gap: 18px; align-items: flex-start;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .cc:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .cc-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(0,113,227,.08);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cc-icon svg {
+      width: 18px; height: 18px;
+      stroke: var(--accent); fill: none; stroke-width: 1.8;
+    }
+    .cc-label {
+      font-size: 0.7rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--text3); margin-bottom: 4px;
+    }
+    .cc-value {
+      font-size: 0.92rem; font-weight: 500; color: var(--text); line-height: 1.45;
+    }
+    .cc-value a { color: var(--accent); }
+    .cc-value a:hover { text-decoration: underline; }
+
+    .social-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .social-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 980px; padding: 10px 20px;
+      font-size: 0.82rem; font-weight: 600; color: var(--text2);
+      box-shadow: var(--shadow-sm); transition: all .2s;
+    }
+    .social-pill:hover {
+      background: var(--accent); color: #fff;
+      border-color: var(--accent); transform: scale(1.03);
+    }
+    .social-pill svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 36px 24px;
+    }
+    .footer-inner {
+      max-width: 860px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-brand { font-size: 0.88rem; font-weight: 700; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 0.75rem; color: var(--text3); transition: color .15s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { font-size: 0.75rem; color: var(--text3); }
+
+    /* ANIMATIONS */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bob {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(7px); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1),
+                  transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .08s; }
+    .reveal-d2 { transition-delay: .16s; }
+    .reveal-d3 { transition-delay: .24s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: fixed; top: var(--nav-h); left: 0; right: 0;
+        background: rgba(245,245,247,.96);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 24px; gap: 18px;
+        transition: background .3s;
+      }
+      [data-theme="dark"] .nav-links.open {
+        background: rgba(0,0,0,.96);
+      }
+      .nav-links.open a { font-size: 1rem; }
+      .hamburger { display: flex; }
+      .stat-strip { grid-template-columns: repeat(2,1fr); }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+      .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+      .about-layout { grid-template-columns: 1fr; gap: 40px; }
+      .contact-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Savate klub Kraljevec</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#o-klubu">O klubu</a></li>
+    <li><a href="#ljestvica">Ljestvica</a></li>
+    <li><a href="#raspored">Raspored</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <!-- Sun icon (shown in light mode) -->
+      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z"/>
+      </svg>
+      <!-- Moon icon (shown in dark mode) -->
+      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"/>
+      </svg>
+    </button>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">Sezona 2025 / 2026</p>
+  <h1 class="hero-title">KK Sesvetski<br><em>Kraljevec</em></h1>
+  <p class="hero-sub">Treća muška liga — Centar · Košarkaški savez Zagreba</p>
+  <div class="hero-actions">
+    <a href="#ljestvica" class="pill pill-blue">Ljestvica sezone</a>
+    <a href="#raspored" class="pill pill-clear">Raspored utakmica</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-hint-label">Scroll</div>
+    <div class="scroll-hint-line"></div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-cell reveal">
+    <div class="stat-n">20<em>24</em></div>
+    <div class="stat-l">Godina osnivanja</div>
+  </div>
+  <div class="stat-cell reveal reveal-d1">
+    <div class="stat-n">3<em>. NL</em></div>
+    <div class="stat-l">Liga — Centar</div>
+  </div>
+  <div class="stat-cell reveal reveal-d2">
+    <div class="stat-n"><em>KSZ</em></div>
+    <div class="stat-l">Savez Zagreba</div>
+  </div>
+  <div class="stat-cell reveal reveal-d3">
+    <div class="stat-n"><em>IVER</em></div>
+    <div class="stat-l">Domaća dvorana</div>
+  </div>
+</div>
+
+<!-- O KLUBU -->
+<section id="o-klubu">
+  <div class="container">
+    <p class="s-eyebrow reveal">O klubu</p>
+    <h2 class="s-title reveal reveal-d1">Tko smo mi</h2>
+    <div class="about-layout">
+      <div class="s-body reveal reveal-d2">
+        <p>KK Sesvetski Kraljevec osnovan je 2024. godine od strane grupe prijatelja s dugogodišnjom ljubavlju prema košarci. Naša motivacija je jednostavna — ljubav prema igri i poticanje mladih da otkriju ljepotu ovog sporta.</p>
+        <p>Dom naše ekipe je <strong>Dvorana Iver</strong> u Sesvetskom Kraljevcu, gdje provodimo treninge i igramo domaće utakmice. Natječemo se u <strong>Trećoj muškoj ligi — Centar</strong>, jednoj od regionalnih liga pod okriljem Košarkaškog saveza Zagreba.</p>
+        <p>Klub raste, a vrata su otvorena svima koji dijele strast prema košarci. Upisi za djecu 1.–4. razreda su otvoreni.</p>
+      </div>
+      <div class="about-cards reveal reveal-d3">
+        <div class="ac"><div class="ac-n">20<em>24</em></div><div class="ac-l">Osnivanje</div></div>
+        <div class="ac"><div class="ac-n">3<em>. NL</em></div><div class="ac-l">Liga Centar</div></div>
+        <div class="ac"><div class="ac-n"><em>KSZ</em></div><div class="ac-l">Savez</div></div>
+        <div class="ac"><div class="ac-n"><em>IVER</em></div><div class="ac-l">Dvorana</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LJESTVICA -->
+<section id="ljestvica">
+  <div class="container">
+    <p class="s-eyebrow reveal">Natjecanje</p>
+    <h2 class="s-title reveal reveal-d1">Ljestvica lige</h2>
+
+    <div class="season-selector reveal reveal-d2">
+      <button class="season-btn active" onclick="switchSeason('2526')">2025 / 2026</button>
+      <button class="season-btn"        onclick="switchSeason('2425')">2024 / 2025</button>
+    </div>
+
+    <!-- 25/26 -->
+    <div class="widget-wrap reveal reveal-d3" id="widget-2526">
+      <iframe
+        src="https://widgets.sofascore.com/embed/tournament/111460/season/80680/standings/Tre%C4%87a%20mu%C5%A1ka%20liga%20-%20Centar%2025%2F26?widgetTitle=Tre%C4%87a%20mu%C5%A1ka%20liga%20-%20Centar%2025%2F26&showCompetitionLogo=true"
+        height="683" scrolling="no" frameborder="0">
+      </iframe>
+      <div class="widget-credit">
+        Ljestvica: <a href="https://www.sofascore.com/basketball/tournament/croatia-amateur/treca-muska-liga-centar/19956#id:80680" target="_blank" rel="noopener">Sofascore — Treća muška liga Centar 25/26</a>
+      </div>
+    </div>
+
+    <!-- 24/25 -->
+    <div class="widget-wrap hidden" id="widget-2425">
+      <iframe
+        src="https://widgets.sofascore.com/embed/tournament/111460/season/65263/standings/Tre%C4%87a%20mu%C5%A1ka%20liga%20-%20Centar%2024%2F25?widgetTitle=Tre%C4%87a%20mu%C5%A1ka%20liga%20-%20Centar%2024%2F25&showCompetitionLogo=true"
+        height="603" scrolling="no" frameborder="0">
+      </iframe>
+      <div class="widget-credit">
+        Ljestvica: <a href="https://www.sofascore.com/basketball/tournament/croatia-amateur/treca-muska-liga-centar/19956#id:65263" target="_blank" rel="noopener">Sofascore — Treća muška liga Centar 24/25</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RASPORED -->
+<section id="raspored">
+  <div class="container">
+    <p class="s-eyebrow reveal">Utakmice</p>
+    <h2 class="s-title reveal reveal-d1">Raspored i rezultati</h2>
+    <div class="widget-wrap reveal reveal-d2">
+      <!--
+        TODO: zamijeni src s pravim SofaScore embed URL-om za raspored ekipe.
+        Idi na sofascore.com → KK Sesvetski Kraljevec → klikni share/embed.
+      -->
+      <iframe
+        src="https://widgets.sofascore.com/embed/team/1090434/matches?widgetTitle=KK%20Sesvetski%20Kraljevec&showCompetitionLogo=true"
+        height="500" scrolling="no" frameborder="0">
+      </iframe>
+      <div class="widget-credit">
+        Raspored: <a href="https://www.sofascore.com/basketball/tournament/croatia-amateur/treca-muska-liga-centar/19956" target="_blank" rel="noopener">Sofascore</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="container">
+    <p class="s-eyebrow reveal">Kontakt</p>
+    <h2 class="s-title reveal reveal-d1">Povežite se s nama</h2>
+    <div class="contact-cards">
+      <div class="cc reveal reveal-d1">
+        <div class="cc-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 21.72 16z"/></svg>
+        </div>
+        <div>
+          <div class="cc-label">Trener Filip</div>
+          <div class="cc-value"><a href="tel:0915614177">091 561 4177</a></div>
+        </div>
+      </div>
+      <div class="cc reveal reveal-d2">
+        <div class="cc-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="cc-label">E-mail</div>
+          <div class="cc-value"><a href="mailto:kosarkaskc@gmail.com">kosarkaskc@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="cc reveal reveal-d1">
+        <div class="cc-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="cc-label">Dvorana</div>
+          <div class="cc-value">Dvorana Iver<br>Sesvetski Kraljevec</div>
+        </div>
+      </div>
+      <div class="cc reveal reveal-d2">
+        <div class="cc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="cc-label">Upisi</div>
+          <div class="cc-value">Otvoreni za djecu<br>1.–4. razreda</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-row reveal reveal-d3">
+      <a href="https://www.instagram.com/kk.sesvetski.kraljevec/" target="_blank" rel="noopener" class="social-pill">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        @kk.sesvetski.kraljevec
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61564058195795" target="_blank" rel="noopener" class="social-pill">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">KK Sesvetski Kraljevec</div>
+    <div class="footer-links">
+      <a href="#o-klubu">O klubu</a>
+      <a href="#ljestvica">Ljestvica</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <div class="footer-copy">© 2025 KK Sesvetski Kraljevec</div>
+  </div>
+</footer>
+
+<script>
+  // Theme — load saved preference or system preference
+  const savedTheme = localStorage.getItem('kksk-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('kksk-theme', next);
+  }
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a =>
+    a.addEventListener('click', () =>
+      document.getElementById('navLinks').classList.remove('open')));
+
+  // Season switcher
+  function switchSeason(key) {
+    document.getElementById('widget-2526').classList.toggle('hidden', key !== '2526');
+    document.getElementById('widget-2425').classList.toggle('hidden', key !== '2425');
+    document.querySelectorAll('.season-btn').forEach((btn, i) => {
+      btn.classList.toggle('active',
+        (i === 0 && key === '2526') || (i === 1 && key === '2425'));
+    });
+  }
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const links    = document.querySelectorAll('.nav-links a');
+  sections.forEach(s =>
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(a => a.classList.remove('active'));
+          const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (a) a.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' }).observe(s));
+
+  // Scroll reveal
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
