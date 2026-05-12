@@ -353,19 +353,23 @@
     @media (max-width: 720px) {
       .nav-links { display: none; }
       .nav-links.open {
-        display: flex; flex-direction: column;
-        position: fixed; top: var(--nav-h); left: 0; right: 0;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        transform: none;
+        z-index: 300;
         background: rgba(245,245,247,.96);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border);
-        padding: 24px; gap: 18px;
-        transition: background .3s;
+        padding: 24px; 
+        gap: 18px;
       }
       [data-theme="dark"] .nav-links.open { background: rgba(0,0,0,.96); }
       .nav-links.open a { font-size: 1rem; }
       .hamburger { display: flex; }
-      .about-layout { grid-template-columns: 1fr; gap: 40px; }
-      .contact-cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
