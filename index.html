@@ -353,7 +353,8 @@
       border-color: var(--accent2); transform: scale(1.03);
     }
     a[href*="instagram.com"].social-pill:hover {
-      background: linear-gradient(45deg, #F77737, #FD1D1D, #E1306C, #C13584, #5B51D8, #405DE6);
+      background: linear-gradient(135deg, #f77737 0%, #fd1d1d 32%, #c13584 58%, #405de6 88%, #405de6 100%);
+      background-clip: padding-box;
       border-color: transparent;
     }
     .social-pill svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
@@ -621,7 +622,7 @@
           </div>
           <div>
             <div class="cc-label">Dvorana</div>
-            <div class="cc-value">DVD Sesvetski Kraljevec<br>Željeznička ulica 13, 10361, Sesvetski Kraljevec</div>
+            <div class="cc-value">DVD Sesvetski Kraljevec<br><a href="https://www.google.com/maps/search/?api=1&query=%C5%BDeljezni%C4%8Dka+ulica+13%2C+10361%2C+Sesvetski+Kraljevec" target="_blank" rel="noopener">Željeznička ulica 13, 10361, Sesvetski Kraljevec</a></div>
           </div>
         </div>
 
@@ -654,7 +655,10 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">Savate klub Kraljevec</div>
+      <div class="footer-links">
+        <a href="https://hrvatski-savate-savez.hr/" target="_blank" rel="noopener">Hrvatski savate savez</a>
+        <a href="https://www.zgsavate.hr/" target="_blank" rel="noopener">Zagrebački savate savez</a>
+      </div>
       <div class="footer-copy">© 2026 Savate klub Kraljevec</div>
     </div>
   </footer>
