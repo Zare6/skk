@@ -17,7 +17,7 @@
       --bg3:       #fbfbfd;
       --text:      #1d1d1f;
       --text2:     #424245;
-      --text3:     #6e6e73;
+      --text3:     #515158;
       --accent:    #0071e3;
       --accent2:   #1877f2;
       --border:    rgba(0,0,0,0.08);
@@ -431,6 +431,83 @@
       .hamburger { display: flex; }
     }
 
+
+    /* Quiet hierarchy, generous reading space, and a separate background mark. */
+    section { scroll-margin-top: var(--nav-h); }
+    .s-title { text-wrap: balance; }
+    .s-body {
+      font-size: clamp(1rem, 1.1vw, 1.0625rem);
+      color: var(--text2);
+      line-height: 1.85;
+      overflow-wrap: anywhere;
+    }
+    .s-body p { margin-bottom: 1.5em; }
+    .s-body ul { margin: 0 0 1.5em; padding: 0; }
+    .s-body li { padding-left: .25em; margin-bottom: .7em; }
+    .s-body li::marker { color: var(--accent); }
+    .s-body h3 {
+      color: var(--text);
+      font-size: clamp(1.25rem, 2vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: -.025em;
+      line-height: 1.3;
+      margin: 2.5em 0 .85em;
+      padding-top: 1.4em;
+      border-top: 1px solid var(--border);
+    }
+    .s-body h3:first-child { margin-top: 0; padding-top: 0; border: 0; }
+    .home-logo { position: absolute; inset: 0 0 24%; z-index: 0; }
+    .home-logo img {
+      width: min(440px, 70vw);
+      max-height: 54svh;
+      opacity: .15;
+      transform: none;
+    }
+    [data-theme="dark"] .home-logo img { opacity: .2; }
+    .home-inner { position: absolute; bottom: clamp(110px, 15svh, 160px); }
+    .home-title {
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      letter-spacing: -.055em;
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+    .home-title span {
+      display: block;
+      font-size: clamp(1.15rem, 2.4vw, 1.75rem);
+      font-weight: 500;
+      letter-spacing: -.025em;
+      margin-bottom: .65em;
+    }
+    .home-eyebrow:empty, .home-sub:empty { display: none; }
+    .about-layout { grid-template-columns: minmax(0, 1.65fr) minmax(260px, .8fr); gap: clamp(40px, 6vw, 88px); }
+    .about-cards { position: sticky; top: calc(var(--nav-h) + 32px); grid-template-columns: 1fr; box-shadow: var(--shadow-sm); }
+    .ac { padding: 28px; }
+    .ac + .ac { border-top: 1px solid var(--border); }
+    .ac-n { font-size: clamp(1.5rem, 2.2vw, 1.9rem); line-height: 1.15; }
+    #povijest-savatea .container {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(0, 1.65fr);
+      gap: clamp(40px, 6vw, 88px);
+      align-items: start;
+    }
+    .history-heading { position: sticky; top: calc(var(--nav-h) + 40px); }
+    .history-heading .s-title { font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1.15; }
+    @media (max-width: 980px) {
+      .about-layout, #povijest-savatea .container { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+      .history-heading, .about-cards { position: static; }
+      .about-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .ac { padding: 24px 20px; }
+      .ac + .ac { border-top: 0; border-left: 1px solid var(--border); }
+      .history-heading .s-title { max-width: 26ch; margin-bottom: 0; }
+    }
+    @media (max-width: 600px) {
+      .about-cards { grid-template-columns: 1fr; }
+      .ac + .ac { border-left: 0; border-top: 1px solid var(--border); }
+      .s-body { line-height: 1.8; }
+      .home-logo img { width: min(360px, 78vw); opacity: .15; }
+      [data-theme="dark"] .home-logo img { opacity: .2; }
+    }
+
     /* Reduce motion (bolje za slabije uređaje) */
     @media (prefers-reduced-motion: reduce){
       html { scroll-behavior: auto; }
@@ -488,7 +565,7 @@
 
     <div class="home-inner">
       <p class="home-eyebrow"></p>
-      <h1 class="home-title">Savate klub<br>Kraljevec</h1>
+      <h1 class="home-title"><span>Savate klub</span>Kraljevec</h1>
       <p class="home-sub"></p>
     </div>
 
@@ -505,7 +582,7 @@
       <h2 class="s-title reveal reveal-d1">Tko smo mi</h2>
 
       <div class="about-layout">
-        <div class="s-body reveal reveal-d2">
+        <div class="s-body">
           <p>Klub u Sesvetskom Kraljevcu djeluje od jeseni 1976. kada je osnovan Karate klub ''Budućnost''. Prvi treninzi održavani su u dvorani kina ''Jedinstvo''. Otvaranjem sportske dvorane u OŠ ''Slavko Stančir'' bitno su poboljšani uvjeti za rad karatista, a u rad se, pored Zdenka Čora, uključuje još jedan trener - Željko Jarec.</p>
           <p>Od 1978. godine vježba se tzv. ''full - contact'' karate. Na Europskom prvenstvu u Londonu 1980. postignuti su prvi zapaženi uspjesi: brončana medalja i peto mjesto. Slijede brojni pozivi na međunarodna natjecanja u Hamburg, Genovu i dr.. Naravno, klub postiže i značajne rezultate na domaćoj sceni gdje redovito ima najmanje jednog prvaka države.</p>
           <p>Godine 1982. u klubu se počinje vježbati Savate - francuski boks. U Zagrebu 1983. održan je prvi Kup Zagreba na kojem su gosti bili borci iz Francuske.</p>
@@ -529,35 +606,38 @@
 
   <section id="povijest-savatea">
     <div class="container">
+      <header class="history-heading">
       <p class="s-eyebrow reveal">Povijest Savatea</p>
       <h2 class="s-title reveal reveal-d1">Savate (Boxe Française) – povijest, pravila i natjecanja</h2>
-      <div class="about-layout"></div>
-        <div class="s-body reveal reveal-d2">
-          <p><strong>Što je savate?</strong><br>
-          Boxe Française (Savate) je borilački sport u kojem se koriste udarci rukama i nogama, a razvio se u Francuskoj na prijelazu između 17. i 18. stoljeća, dok se današnji oblik sporta oblikuje oko 1820. godine. Iako pravila nisu bila potpuno definirana sve do 1899., korijeni borbe udarcima rukama i nogama u Europi često se povezuju s antičkim disciplinama poput pankrationa.</p>
+      </header>
+        <div class="s-body">
+          <h3>Što je savate?</h3>
+          <p>Boxe Française (Savate) je borilački sport u kojem se koriste udarci rukama i nogama, a razvio se u Francuskoj na prijelazu između 17. i 18. stoljeća, dok se današnji oblik sporta oblikuje oko 1820. godine. Iako pravila nisu bila potpuno definirana sve do 1899., korijeni borbe udarcima rukama i nogama u Europi često se povezuju s antičkim disciplinama poput pankrationa.</p>
 
-          <p><strong>Povijest savatea</strong><br>
-          Nakon prestanka tradicije organiziranih drevnih igara, razni oblici tjelesne borbe prenose se u “ulične” oblike nadmetanja. U Francuskoj 17. stoljeća razvila su se dva prepoznatljiva stila: Chausson Marseillais (naglasak na snazi udarca nogom) i Savate (kombinacija otvorenih udaraca rukom i nižih udaraca nogom).</p>
+          <h3>Povijest savatea</h3>
+          <p>Nakon prestanka tradicije organiziranih drevnih igara, razni oblici tjelesne borbe prenose se u “ulične” oblike nadmetanja. U Francuskoj 17. stoljeća razvila su se dva prepoznatljiva stila: Chausson Marseillais (naglasak na snazi udarca nogom) i Savate (kombinacija otvorenih udaraca rukom i nižih udaraca nogom).</p>
 
           <p>Charles Lecour 1845. donosi prva pravila modernog savatea i oblikuje Savate – Francuski boks, spajajući elemente spomenutih stilova te dodajući udarce stisnutom šakom preuzete iz engleskog boksa. Maitre Charlemont 1899. piše prvu javnu raspravu o savateu te, inspiriran mačevanjem, uvodi i sistematizira niz tehničkih elemenata, što postaje temelj suvremenih pravila.</p>
 
           <p>Početkom 20. stoljeća savate se širi kroz vojsku i škole u više europskih zemalja, a 1924. bio je demonstracijski sport na Olimpijskim igrama u Parizu. Godine 1970. nastaje jedinstvena federacija za savate i pridružene discipline, a savate se proglašava nacionalnim sportom Francuske; međunarodna federacija okuplja više od 50 nacionalnih saveza, uključujući Hrvatsku (primljena 15.01.1992.).</p>
 
-          <p><strong>Savate u Hrvatskoj</strong><br>
-          Savate u Zagreb dolazi 1918. godine, a donio ga je dr. Schultz iz Praga; dr. Schultz i Janiček 1920. izdaju knjigu „Šakanje“. Nakon gašenja tijekom rata, obnova započinje 1976. na inicijativu Davora Đenovića i francuskog instruktora Damiena Wehra, a treninzi se organizirano šire na gradove poput Rijeke, Zagreba, Sesvetskog Kraljevca, Osijeka, Borova, Crikvenice i Splita. U Zagrebu je 1983. održan Kup Zagreba uz sudjelovanje domaćih boraca i boraca iz Francuske.</p>
+          <h3>Savate u Hrvatskoj</h3>
+          <p>Savate u Zagreb dolazi 1918. godine, a donio ga je dr. Schultz iz Praga; dr. Schultz i Janiček 1920. izdaju knjigu „Šakanje“. Nakon gašenja tijekom rata, obnova započinje 1976. na inicijativu Davora Đenovića i francuskog instruktora Damiena Wehra, a treninzi se organizirano šire na gradove poput Rijeke, Zagreba, Sesvetskog Kraljevca, Osijeka, Borova, Crikvenice i Splita. U Zagrebu je 1983. održan Kup Zagreba uz sudjelovanje domaćih boraca i boraca iz Francuske.</p>
 
-          <p><strong>Osobna oprema</strong><br>
-          U savateu se koristi sljedeća oprema: savate triko, savate tenisice, rukavice, štitnik za zube, štitnik za genitalije, zaštitna kaciga i štitnici za potkoljenice.</p>
+          <h3>Osobna oprema</h3>
+          <p>U savateu se koristi sljedeća oprema: savate triko, savate tenisice, rukavice, štitnik za zube, štitnik za genitalije, zaštitna kaciga i štitnici za potkoljenice.</p>
 
-          <p><strong>Vrste natjecanja</strong></p>
+          <h3>Vrste natjecanja</h3>
+          <ul>
             <li><strong>Assaut</strong> – osnovni oblik borbe uz lagani kontakt i korištenje kompletne zaštitne opreme.</li>
             <li><strong>Pre-combat</strong> – oblik borbe s udarcima punijeg kontakta uz potpunu zaštitu, kao priprema za višu razinu.</li>
             <li><strong>Combat</strong> – borba punim kontaktom, bez zaštitne kacige, uz obveznu osobnu zaštitu.</li>
             <li><strong>Canne</strong> – borba štapom slična mačevanju, pridružena disciplina tradicionalnom savateu.</li>
+          </ul>
           <p><em>Kadeti do 17 godina natječu se samo u assautu, u kojem nije dopušten snažan udarac nego vrlo mali kontakt.</em></p>
 
-          <p><strong>Tehnike i pravila</strong><br>
-          Udarci rukom: dopuštene su sve tehnike iz boksa (direkt, bočni, odozdo, odozgo/swing), dok su zabranjeni udarci donjim dijelom šake, nedopuštenom površinom rukavice te udarac šakom iz okreta.</p>
+          <h3>Tehnike i pravila</h3>
+          <p>Udarci rukom: dopuštene su sve tehnike iz boksa (direkt, bočni, odozdo, odozgo/swing), dok su zabranjeni udarci donjim dijelom šake, nedopuštenom površinom rukavice te udarac šakom iz okreta.</p>
 
           <p>Udarci nogom: dopušteni su prednji, kružni i bočni udarci (ispod i iznad pojasa), kao i zadnji udarci te udarci iz okreta i u skoku; udarna površina je rist stopala i puno stopalo.</p>
 
@@ -565,11 +645,11 @@
 
           <p>Zabranjeno je: guranje, hvatanje noge, udaranje u kralježnicu/vrat/tjeme/potiljak/kukove/genitalije, napadi laktom i koljenom, udarac nakon zapovijedi „stop“ ili prekida te udaranje protivnika na podu; dodatno, zabranjeno je udarati i nakon gonga, kao i nesportsko ponašanje.</p>
 
-          <p><strong>Savate pozdrav</strong><br>
-          Sportski pozdrav izvodi se primicanjem desne ruke srcu i ispružanjem iste udesno dolje („od srca“).</p>
+          <h3>Savate pozdrav</h3>
+          <p>Sportski pozdrav izvodi se primicanjem desne ruke srcu i ispružanjem iste udesno dolje („od srca“).</p>
 
-          <p><strong>Način bodovanja</strong><br>
-          Pozitivni bodovi dodjeljuju se za pravilno izvedene tehnike uz odgovarajuću doziranu snagu:</p>
+          <h3>Način bodovanja</h3>
+          <p>Pozitivni bodovi dodjeljuju se za pravilno izvedene tehnike uz odgovarajuću doziranu snagu:</p>
           <ul>
             <li>Udarci rukom u glavu ili tijelo: 1 bod</li>
             <li>Udarac nogom u nogu: 1 bod</li>
@@ -578,10 +658,9 @@
           </ul>
           <p>Negativni bodovi (kazne/opomene) iznose -1 bod, a treća opomena u jednoj rundi znači diskvalifikaciju. Pobjeda se može ostvariti na bodove, predajom, tehničkim ili klasičnim „knock-out“-om te diskvalifikacijom protivnika.</p>
 
-          <p><strong>Trajanje borbi i borilište</strong><br>
-          Seniorske borbe u combatu najčešće traju 5 × 2 minute uz 1 minutu odmora između rundi te se odvijaju na boksačkom ringu, dok se borbe u assautu odvijaju na borilištu (tatami).</p>
+          <h3>Trajanje borbi i borilište</h3>
+          <p>Seniorske borbe u combatu najčešće traju 5 × 2 minute uz 1 minutu odmora između rundi te se odvijaju na boksačkom ringu, dok se borbe u assautu odvijaju na borilištu (tatami).</p>
         </div>
-      </div>
     </div>
   </section>
 
