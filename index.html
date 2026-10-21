@@ -459,19 +459,7 @@
     .home-eyebrow:empty, .home-sub:empty { display: none; }
     #o-klubu .container { max-width: 860px; }
     .about-layout { display: block; }
-    #povijest-savatea .container {
-      display: grid;
-      grid-template-columns: minmax(0, .8fr) minmax(0, 1.65fr);
-      gap: clamp(40px, 6vw, 88px);
-      align-items: start;
-    }
-    .history-heading { position: sticky; top: calc(var(--nav-h) + 40px); }
-    .history-heading .s-title { font-size: clamp(2rem, 3.2vw, 2.75rem); line-height: 1.15; }
-    @media (max-width: 980px) {
-      #povijest-savatea .container { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-      .history-heading { position: static; }
-      .history-heading .s-title { max-width: 26ch; margin-bottom: 0; }
-    }
+    #povijest-savatea .container { max-width: 860px; }
     @media (max-width: 600px) {
       .s-body { line-height: 1.8; }
       .home-logo img { width: min(360px, 78vw); opacity: .15; }
