@@ -292,6 +292,8 @@
       border-radius: var(--radius);
       padding: 28px; box-shadow: var(--shadow-sm);
       display: flex; gap: 18px; align-items: flex-start;
+      min-width: 0;
+      overflow-wrap: anywhere;
       transition: box-shadow .2s, transform .2s;
     }
     .cc:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
@@ -434,15 +436,20 @@
       border-top: 1px solid var(--border);
     }
     .s-body h3:first-child { margin-top: 0; padding-top: 0; border: 0; }
-    .home-logo { position: absolute; inset: 0 0 24%; z-index: 0; }
+    /* Keep the logo and title in normal flow so they never overlap. */
+    #home {
+      gap: clamp(28px, 4svh, 48px);
+      padding: calc(var(--nav-h) + 36px) var(--pad) 120px;
+    }
+    .home-logo { position: relative; inset: auto; z-index: 0; flex-shrink: 0; }
     .home-logo img {
       width: min(440px, 70vw);
-      max-height: 54svh;
+      max-height: 48svh;
       opacity: .15;
       transform: none;
     }
     [data-theme="dark"] .home-logo img { opacity: .2; }
-    .home-inner { position: absolute; bottom: clamp(110px, 15svh, 160px); }
+    .home-inner { position: relative; bottom: auto; flex-shrink: 0; }
     .home-title {
       font-size: clamp(3.5rem, 9vw, 7rem);
       letter-spacing: -.055em;
@@ -736,8 +743,28 @@
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <div>
-            <div class="cc-label">Raspored treninga</div>
+            <div class="cc-label">Raspored savate treninga</div>
             <div class="cc-value">Ponedjeljak, utorak i srijeda 20h-22h</div>
+          </div>
+        </div>
+
+        <div class="cc reveal reveal-d1">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M6 21v-3a6 6 0 0 1 12 0v3M12 12v9"/></svg>
+          </div>
+          <div>
+            <div class="cc-label">Individualni treninzi i kondicijska priprema sportaša</div>
+            <div class="cc-value">Informacije i dogovor: <a href="tel:098555333">098 555 333</a></div>
+          </div>
+        </div>
+
+        <div class="cc reveal reveal-d1">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8v8M3 10v4M18 8v8M21 10v4M6 12h12"/></svg>
+          </div>
+          <div>
+            <div class="cc-label">Grupni treninzi i teretana</div>
+            <div class="cc-value">Informacije i dogovor: <a href="tel:098555333">098 555 333</a></div>
           </div>
         </div>
       </div>
